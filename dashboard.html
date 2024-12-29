@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="عيادة الدايت للدكتور سمر شتا. أفضل الخدمات لمتابعة مرضى الدايت وتحليل الإحصائيات.">
+    <meta name="keywords" content="عيادة, الدايت, الدكتور سمر, متابعة مرضى, إحصائيات الدايت">
+    <meta name="author" content="دكتور سمر شتا">
+    <meta property="og:title" content="عيادة الدكتور سمر">
+    <meta property="og:description" content="أفضل الخدمات لمتابعة مرضى الدايت وتحليل الإحصائيات.">
+    <meta property="og:image" content="path/to/image.jpg">
+    <title>الصفحة الرئيسية</title>
+
+    <!-- تحسين تحميل الخطوط -->
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500&display=swap" as="style">
+
+    <!-- رابط لخطوط خارجية من Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <style>
+        /* الأساسيات */
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background: linear-gradient(135deg, #6a4c9c, #9b7ed5);
+            color: white;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            min-height: 100vh;
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+
+        body.dark-mode {
+            background: #2c2c54;
+            color: #e0e0e0;
+        }
+
+        /* تصميم الهيدر */
+        header {
+            font-size: 40px;
+            font-weight: 600;
+            text-align: center;
+            margin-bottom: 40px;
+            color: #fff;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
+            animation: fadeIn 1s ease-out;
+        }
+
+        header span {
+            font-size: 50px;  /* حجم الإيموجي */
+        }
+
+        header .logo {
+            font-size: 40px;
+            font-weight: 600;
+            color: #fff;
+            display: inline-flex;
+            align-items: center;
+        }
+
+        header .logo span {
+            margin-left: 10px;
+            font-size: 30px; /* حجم الإيموجي بجانب الاسم */
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* تحسين شريط التنقل */
+        nav {
+            width: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 10px 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 10;
+        }
+
+        .navbar-brand {
+            font-size: 24px;
+            font-weight: bold;
+            color: #fff;
+        }
+
+        .navbar-nav .nav-link {
+            color: #fff;
+            padding: 10px 20px;
+            text-transform: uppercase;
+            font-weight: 500;
+        }
+
+        .navbar-nav .nav-link:hover {
+            background: #9b7ed5;
+            color: white;
+            border-radius: 5px;
+        }
+
+        .navbar-nav .nav-item.active .nav-link {
+            background-color: #9b7ed5;
+            color: white;
+        }
+
+        /* إضافة صورة المستخدم في الهيدر */
+        #user-image {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-left: 10px;
+        }
+
+        /* تصميم بطاقات الخيارات */
+        .options-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 30px;
+            padding: 20px;
+            margin-top: 100px;
+        }
+
+        .option-card {
+            background-color: #fff;
+            border-radius: 15px;
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            padding: 30px 20px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            text-decoration: none;
+            opacity: 0;
+            transform: translateY(20px);
+            will-change: transform, opacity;
+        }
+
+        .option-card.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .option-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 20px 35px rgba(0, 0, 0, 0.2);
+            background-color: #f5f5f5;
+        }
+
+        .option-card i {
+            font-size: 60px;
+            color: #6a4c9c;
+            transition: color 0.3s ease;
+        }
+
+        .option-card:hover i {
+            color: #9b7ed5;
+        }
+
+        .option-card p {
+            font-size: 20px;
+            margin-top: 15px;
+            font-weight: 600;
+            color: #444;
+            text-transform: uppercase;
+        }
+
+        /* التفاعل مع الوضع الداكن */
+        .dark-mode .option-card {
+            background-color: #333;
+            color: #fff;
+        }
+
+        .dark-mode .option-card i {
+            color: #dcdde1;
+        }
+
+        /* تأثيرات التمرير */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        hr {
+            border-color: #fff;
+            width: 80%;
+            margin-top: 40px;
+        }
+
+        /* الاستجابة للهواتف المحمولة */
+        @media (max-width: 768px) {
+            header {
+                font-size: 30px;
+            }
+
+            .options-container {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+        }
+
+        /* تخصيص الفوتر */
+        .footer {
+            margin-top: 60px;
+            font-size: 14px;
+            text-align: center;
+            color: #fff;
+        }
+
+        .footer a {
+            color: #fff;
+            margin: 0 10px;
+        }
+
+        .footer a:hover {
+            color: #9b7ed5;
+        }
+
+        /* تخصيص زر الوضع الداكن */
+        .btn-dark-mode {
+            background-color: #444;
+            color: #fff;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .btn-dark-mode:hover {
+            background-color: #9b7ed5;
+        }
+
+        .btn-dark-mode:active {
+            background-color: #6a4c9c;
+        }
+
+        /* إشعارات */
+        .notifications {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: #9b7ed5;
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .notification-item {
+            display: block;
+            margin: 5px 0;
+        }
+
+        /* إعدادات */
+        .settings-container {
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+
+        .btn {
+            width: 100%;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">
+                <span>🏥</span> عيادة الدايت
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item active"><a class="nav-link" href="#">الرئيسية</a></li>
+                    <li class="nav-item"><a class="nav-link" href="add-patient.html">إضافة مريض</a></li>
+                    <li class="nav-item"><a class="nav-link" href="statistics.html">الإحصائيات</a></li>
+                </ul>
+            </div>
+            <button onclick="toggleDarkMode()" class="btn-dark-mode" aria-label="تبديل الوضع الداكن">تبديل الوضع</button>
+            <button onclick="logout()" class="btn-dark-mode" aria-label="تسجيل الخروج">تسجيل الخروج</button>
+        </div>
+    </nav>
+
+    <header>
+        <div class="logo">
+            <span>🌿</span>  عيادة الدايت
+            <span> - </span> دكتور سمر شتا
+        </div>
+    </header>
+
+    <main>
+        <div class="options-container">
+            <a href="add-patient.html" class="option-card">
+                <i class="fas fa-user-plus"></i>
+                <p>إضافة مريض</p>
+            </a>
+
+            <a href="today-cases.html" class="option-card">
+                <i class="fas fa-calendar-check"></i>
+                <p>حسابات اليوم</p>
+            </a>
+
+            <a href="patients-summary.html" class="option-card">
+                <i class="fas fa-users"></i>
+                <p>إجمالي المرضى</p>
+            </a>
+
+            <a href="statistics.html" class="option-card">
+                <i class="fas fa-chart-line"></i>
+                <p>الإحصائيات</p>
+            </a>
+
+            <a href="total-patients-today.html" class="option-card">
+                <i class="fas fa-calendar-day"></i>
+                <p>إجمالي المرضى اليوم</p>
+            </a>
+        </div>
+
+        <hr>
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2025 دكتور سمر شتا. جميع الحقوق محفوظة.</p>
+        <div>
+            <a href="https://web.facebook.com/drsummershetaa?mibextid=opq0tG&_rdc=1&_rdr#" target="_blank" rel="noopener noreferrer"><i class="fab fa-facebook"></i></a>
+            <a href="https://www.threads.net/@dr_summersheta?igshid=NTc4MTIwNjQ2YQ==" target="_blank" rel="noopener noreferrer"><i class="fab fa-twitter"></i></a>
+            <a href="https://www.instagram.com/dr_summersheta/?igsh=am02OHh0cHdoaG8x#" target="_blank" rel="noopener noreferrer"><i class="fab fa-instagram"></i></a>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const cards = document.querySelectorAll('.option-card');
+            cards.forEach((card, index) => {
+                window.requestAnimationFrame(() => {
+                    setTimeout(() => card.classList.add('show'), index * 100);
+                });
+            });
+
+            const savedMode = localStorage.getItem('darkMode');
+            if (savedMode === 'true') {
+                document.body.classList.add('dark-mode');
+            }
+
+            const userName = localStorage.getItem('userName');
+            if (userName) {
+                document.getElementById('user-name').textContent = `مرحباً، ${userName}`;
+            }
+        });
+
+        const toggleDarkMode = () => {
+            const body = document.body;
+            const isDarkMode = body.classList.toggle('dark-mode');
+            localStorage.setItem('darkMode', isDarkMode);
+        };
+
+        const logout = () => {
+            localStorage.removeItem('userName');
+            window.location.href = 'login.html';
+        };
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" defer></script>
+</body>
+</html>

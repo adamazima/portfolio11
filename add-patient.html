@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="إضافة مريض جديد إلى عيادة الدكتور سمر. سجل بيانات المريض في العيادة بسهولة.">
+    <meta name="keywords" content="إضافة مريض, عيادة الدكتور سمر, البيانات, الطب">
+    <meta name="author" content="دكتور سمر شتا">
+    <meta property="og:title" content="إضافة مريض جديد">
+    <meta property="og:description" content="إضافة مريض جديد إلى عيادة الدكتور سمر. سجل بيانات المريض بسهولة.">
+    <meta property="og:image" content="path/to/image.jpg">
+    <title>إضافة مريض جديد</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #6a4c9c, #9b7ed5);
+            color: white;
+            height: 100vh;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+
+        body.dark-mode {
+            background: linear-gradient(135deg, #2c2c54, #40407a);
+            color: #e0e0e0;
+        }
+
+        .form-container {
+            background-color: #fff;
+            border-radius: 10px;
+            padding: 30px;
+            margin: 50px auto;
+            max-width: 850px;
+            box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .form-title {
+            font-size: 24px;
+            font-weight: bold;
+            color: #6a4c9c;
+            text-align: center;
+            margin-bottom: 20px;
+            padding: 10px;
+            background: linear-gradient(90deg, #ed25ff, #6f0399);
+            color: #ffffff;
+            border-radius: 8px;
+        }
+
+        label {
+            font-weight: 600;
+            color: #495057;
+        }
+
+        input, select, textarea {
+            border: 1px solid #ced4da;
+            border-radius: 6px;
+            padding: 10px;
+            width: 100%;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            border-color: #007bff;
+            box-shadow: 0 0 8px rgba(0, 123, 255, 0.5);
+        }
+
+        .btn-primary {
+            background-color: #a002a5;
+            border: none;
+            font-weight: bold;
+            padding: 10px 15px;
+            font-size: 18px;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+            box-shadow: 0 5px 10px rgba(0, 91, 187, 0.4);
+        }
+
+        .add-new-method-btn {
+            margin-top: 10px;
+            display: inline-block;
+            color: #007bff;
+            text-decoration: underline;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .form-section-title {
+            font-size: 20px;
+            color: #004085;
+            margin-bottom: 15px;
+            font-weight: bold;
+            text-decoration: underline;
+        }
+
+        .section-divider {
+            border-top: 2px dashed #007bff;
+            margin: 20px 0;
+        }
+
+        .invalid-feedback {
+            color: red;
+            font-size: 0.9rem;
+        }
+
+        .is-invalid {
+            border-color: red;
+            box-shadow: 0 0 5px rgba(255, 0, 0, 0.5);
+        }
+
+        .dark-mode .form-container {
+            background-color: #333;
+            color: #fff;
+        }
+
+        .dark-mode .form-title {
+            background: linear-gradient(90deg, #9b7ed5, #6a4c9c);
+        }
+
+        .dark-mode input, .dark-mode select, .dark-mode textarea {
+            background-color: #444;
+            color: #fff;
+            border-color: #555;
+        }
+
+        .dark-mode .btn-primary {
+            background-color: #6a4c9c;
+            color: #fff;
+        }
+
+        .dark-mode .btn-primary:hover {
+            background-color: #9b7ed5;
+        }
+
+        .navbar {
+            background-color: #333;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            margin-bottom: 40px;
+        }
+
+        .navbar .nav-link {
+            color: #fff !important;
+            font-size: 18px;
+        }
+
+        .navbar .nav-link:hover {
+            color: #a002a5 !important;
+        }
+
+        .navbar .btn-outline-light {
+            color: #fff !important;
+            border: 1px solid #fff;
+        }
+
+        .navbar .btn-outline-light:hover {
+            background-color: #a002a5;
+            border-color: #a002a5;
+        }
+
+        .container {
+            max-width: 1200px;
+        }
+
+        .profile-image-preview {
+            max-width: 150px;
+            max-height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">عيادة الدكتور سمر</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item"><a class="nav-link" href="#">الرئيسية</a></li>
+                    <li class="nav-item"><a class="nav-link" href="add-patient.html">إضافة مريض</a></li>
+                    <li class="nav-item"><a class="nav-link" href="statistics.html">الإحصائيات</a></li>
+                </ul>
+            </div>
+            <div>
+                <button onclick="toggleDarkMode()" class="btn btn-outline-light">تبديل الوضع</button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="form-container">
+            <h1 class="form-title">إضافة مريض جديد</h1>
+            <form id="add-patient-form">
+                <div class="form-section-title">معلومات المريض الأساسية</div>
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label for="patient-name" class="form-label">اسم المريض</label>
+                        <input type="text" id="patient-name" class="form-control" placeholder="أدخل اسم المريض" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="patient-age" class="form-label">العمر</label>
+                        <input type="number" id="patient-age" class="form-control" placeholder="أدخل العمر" required>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label for="patient-gender" class="form-label">الجنس</label>
+                        <select id="patient-gender" class="form-select" required>
+                            <option value="" disabled selected>اختر الجنس</option>
+                            <option value="ذكر">ذكر</option>
+                            <option value="أنثى">أنثى</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="patient-phone" class="form-label">رقم الهاتف</label>
+                        <input type="tel" id="patient-phone" class="form-control" placeholder="أدخل رقم الهاتف" required>
+                        <div class="invalid-feedback">
+                            يرجى إدخال رقم هاتف صالح.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-12">
+                        <label for="nationality" class="form-label">الجنسية</label>
+                        <select id="nationality" class="form-select" required>
+                            <option value="" disabled selected>اختر الجنسية</option>
+                            <option value="مصري">مصري</option>
+                            <option value="سعودي">سعودي</option>
+                            <option value="أردني">أردني</option>
+                            <option value="سوري">سوري</option>
+                        </select>
+                    </div>
+                </div>
+
+                <hr class="section-divider">
+
+                <div class="form-section-title">طريقة معرفة الدكتور</div>
+                <div class="row mb-3">
+                    <div class="col-md-12">
+                        <label for="referral-method" class="form-label">كيف عرفت العيادة؟</label>
+                        <select id="referral-method" class="form-select" required>
+                            <option value="" disabled selected>اختر طريقة...</option>
+                            <option value="فيسبوك">فيسبوك</option>
+                            <option value="إنستجرام">إنستجرام</option>
+                            <option value="أصدقاء">أصدقاء</option>
+                            <option value="بحث على الإنترنت">بحث على الإنترنت</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label for="patient-photo-1" class="form-label">رفع صورة المريض 1</label>
+                        <input type="file" id="patient-photo-1" class="form-control" accept="image/*">
+                        <img id="profile-image-1" class="profile-image-preview" src="" alt="صورة المريض 1" />
+                    </div>
+                    <div class="col-md-6">
+                        <label for="patient-photo-2" class="form-label">رفع صورة المريض 2</label>
+                        <input type="file" id="patient-photo-2" class="form-control" accept="image/*">
+                        <img id="profile-image-2" class="profile-image-preview" src="" alt="صورة المريض 2" />
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary w-100">إضافة المريض</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            // التحقق من رقم الهاتف
+            $('#patient-phone').on('input', function() {
+                var phone = $(this).val();
+                var phonePattern = /^[0-9]+$/;  // نمط رقم الهاتف (أي عدد من الأرقام)
+
+                if (!phone.match(phonePattern)) {
+                    $(this).addClass('is-invalid');
+                } else {
+                    $(this).removeClass('is-invalid');
+                }
+            });
+
+            // عرض الصورة المرفوعة 1
+            $('#patient-photo-1').on('change', function(event) {
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    $('#profile-image-1').attr('src', e.target.result);
+                }
+                reader.readAsDataURL(this.files[0]);
+            });
+
+            // عرض الصورة المرفوعة 2
+            $('#patient-photo-2').on('change', function(event) {
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    $('#profile-image-2').attr('src', e.target.result);
+                }
+                reader.readAsDataURL(this.files[0]);
+            });
+
+            // عند إرسال النموذج
+            $('#add-patient-form').on('submit', function(e) {
+                e.preventDefault();
+                const phone = $('#patient-phone').val();
+                const name = $('#patient-name').val();
+                const age = $('#patient-age').val();
+                const gender = $('#patient-gender').val();
+                const nationality = $('#nationality').val();
+                const referralMethod = $('#referral-method').val();
+                const photo1 = $('#patient-photo-1')[0].files[0];
+                const photo2 = $('#patient-photo-2')[0].files[0];
+
+                if (!phone || !name || !age || !gender || !nationality || !referralMethod) {
+                    alert('يرجى ملء جميع الحقول');
+                    return;
+                }
+
+                // إرسال البيانات إلى الخادم (على سبيل المثال)
+                let formData = new FormData();
+                formData.append("name", name);
+                formData.append("age", age);
+                formData.append("gender", gender);
+                formData.append("phone", phone);
+                formData.append("nationality", nationality);
+                formData.append("referralMethod", referralMethod);
+                formData.append("photo1", photo1);
+                formData.append("photo2", photo2);
+
+                // مثال على إرسال البيانات عبر AJAX (يرجى استبدال URL برابط السيرفر الفعلي)
+                $.ajax({
+                    url: '/path/to/your/server/endpoint',
+                    type: 'POST',
+                    data: formData,
+                    contentType: false,
+                    processData: false,
+                    success: function(response) {
+                        alert('تم إضافة المريض بنجاح');
+                    },
+                    error: function() {
+                        alert('حدث خطأ أثناء إضافة المريض');
+                    }
+                });
+            });
+        });
+
+        // تبديل الوضع الداكن
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+        }
+    </script>
+</body>
+</html>

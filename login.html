@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تسجيل الدخول</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #5F4B8B; /* نفس اللون البنفسجي مثل صفحة "إنشاء حساب" */
+            font-family: 'Arial', sans-serif;
+        }
+
+        .container {
+            margin-top: 80px;
+            background-color: #ffffff;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+            max-width: 400px;
+            opacity: 0.95;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 30px;
+            color: #5F4B8B;
+        }
+
+        .form-control {
+            border-radius: 8px;
+            margin-bottom: 20px;
+            padding: 12px;
+            font-size: 16px;
+            border: 2px solid #ddd;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-control:focus {
+            border-color: #5F4B8B;
+            box-shadow: 0 0 5px rgba(95, 75, 139, 0.8);
+        }
+
+        .btn-primary {
+            background-color: #5F4B8B;
+            border: none;
+            border-radius: 8px;
+            padding: 12px;
+            width: 100%;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background-color: #4a3a6e;
+        }
+
+        .form-text {
+            text-align: center;
+            margin-top: 15px;
+        }
+
+        .site-name {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 30px;
+            color: white;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .form-text a {
+            color: #5F4B8B;
+        }
+
+        .form-text a:hover {
+            color: #4a3a6e;
+        }
+
+        /* تصميم الأيقونة */
+        .toggle-password {
+            cursor: pointer;
+            font-size: 18px;
+            color: #5F4B8B;
+        }
+
+        .toggle-password:hover {
+            color: #4a3a6e;
+        }
+    </style>
+    <script>
+        // تحميل الحسابات من LocalStorage
+        function loadAccounts() {
+            const accounts = localStorage.getItem("accounts");
+            return accounts ? JSON.parse(accounts) : [];
+        }
+
+        // تسجيل الدخول
+        function redirectToDashboard(event) {
+            event.preventDefault();
+            const email = document.getElementById("email").value;
+            const password = document.getElementById("password").value;
+
+            const accounts = loadAccounts();
+            const account = accounts.find(acc => acc.email === email && acc.password === password);
+
+            if (account) {
+                alert("تم تسجيل الدخول بنجاح!");
+                window.location.href = "dashboard.html"; // الانتقال للصفحة الرئيسية
+            } else {
+                alert("بيانات تسجيل الدخول غير صحيحة!");
+            }
+        }
+
+        // إظهار/إخفاء كلمة المرور
+        function togglePassword() {
+            const passwordField = document.getElementById("password");
+            const type = passwordField.type === "password" ? "text" : "password";
+            passwordField.type = type;
+        }
+    </script>
+</head>
+<body>
+
+    <div class="site-name">
+        Samar Shata
+    </div>
+
+    <div class="container">
+        <h2>تسجيل الدخول</h2>
+        <form onsubmit="redirectToDashboard(event)">
+            <div class="mb-3">
+                <label for="email" class="form-label">البريد الإلكتروني</label>
+                <input type="email" class="form-control" id="email" name="email" required placeholder="أدخل بريدك الإلكتروني">
+            </div>
+            <div class="mb-3">
+                <label for="password" class="form-label">كلمة المرور</label>
+                <div class="input-group">
+                    <input type="password" class="form-control" id="password" name="password" required placeholder="أدخل كلمة المرور" minlength="8">
+                    <span class="input-group-text toggle-password" onmouseover="togglePassword()" onmouseout="togglePassword()">👁️</span>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary">تسجيل الدخول</button>
+        </form>
+        <p class="form-text">ليس لديك حساب؟ <a href="register.html">إنشاء حساب جديد</a></p>
+    </div>
+
+</body>
+</html>

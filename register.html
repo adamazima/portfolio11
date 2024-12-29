@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إنشاء حساب جديد</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #5F4B8B; /* درجة البنفسجي الداكن كخلفية */
+            font-family: 'Arial', sans-serif;
+        }
+
+        .container {
+            margin-top: 80px;
+            background-color: #ffffff; /* خلفية بيضاء للنموذج */
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+            max-width: 400px;
+            opacity: 0.95; /* شفافية خفيفة للنموذج */
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 30px;
+            color: #5F4B8B; /* نفس اللون البنفسجي الأساسي */
+        }
+
+        .form-control {
+            border-radius: 8px;
+            margin-bottom: 20px;
+            padding: 12px;
+            font-size: 16px;
+            border: 2px solid #ddd;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-control:focus {
+            border-color: #5F4B8B; /* التركيز بلون أساسي */
+            box-shadow: 0 0 5px rgba(95, 75, 139, 0.8);
+        }
+
+        .btn-primary {
+            background-color: #5F4B8B; /* نفس اللون البنفسجي */
+            border: none;
+            border-radius: 8px;
+            padding: 12px;
+            width: 100%;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background-color: #4a3a6e; /* درجة أغمق قليلاً */
+        }
+
+        .form-text {
+            text-align: center;
+            margin-top: 15px;
+        }
+
+        .site-name {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 30px;
+            color: white;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .input-group button {
+            border-radius: 0 8px 8px 0;
+            border: none;
+            background-color: #ddd;
+            padding: 12px;
+            cursor: pointer;
+        }
+
+        .input-group button:hover {
+            background-color: #5F4B8B; /* نفس اللون البنفسجي */
+        }
+
+        .input-group button i {
+            color: #5F4B8B;
+        }
+
+        .input-group button:hover i {
+            color: #ffffff;
+        }
+
+        .form-text a {
+            color: #5F4B8B;
+        }
+
+        .form-text a:hover {
+            color: #4a3a6e;
+        }
+
+        /* تعديل الأيقونة لتتماشى مع اللون البنفسجي */
+        .input-group .btn i {
+            color: #5F4B8B; /* نفس اللون البنفسجي */
+        }
+
+        .input-group .btn:hover i {
+            color: #ffffff; /* عند التمرير، الأيقونة تتحول إلى اللون الأبيض */
+        }
+    </style>
+    <script>
+        function loadAccounts() {
+            const accounts = localStorage.getItem("accounts");
+            return accounts ? JSON.parse(accounts) : [];
+        }
+
+        function saveAccounts(accounts) {
+            localStorage.setItem("accounts", JSON.stringify(accounts));
+        }
+
+        function registerAccount(event) {
+            event.preventDefault();
+
+            const newEmail = document.getElementById("newEmail").value;
+            const newPassword = document.getElementById("newPassword").value;
+            const confirmPassword = document.getElementById("confirmPassword").value;
+
+            if (newPassword !== confirmPassword) {
+                alert("كلمة المرور وتأكيد كلمة المرور غير متطابقتين!");
+                return;
+            }
+
+            const accounts = loadAccounts();
+
+            if (accounts.some(acc => acc.email === newEmail)) {
+                alert("هذا الحساب موجود بالفعل!");
+                return;
+            }
+
+            accounts.push({ email: newEmail, password: newPassword });
+            saveAccounts(accounts);
+
+            alert("تم إنشاء الحساب بنجاح! يمكنك الآن تسجيل الدخول.");
+            window.location.href = "login.html";
+        }
+    </script>
+</head>
+<body>
+
+    <div class="site-name">
+        Samar Shata
+    </div>
+
+    <div class="container">
+        <h2>إنشاء حساب جديد</h2>
+        <form onsubmit="registerAccount(event)">
+            <div class="mb-3">
+                <label for="newEmail" class="form-label">البريد الإلكتروني</label>
+                <input type="email" class="form-control" id="newEmail" name="newEmail" required placeholder="أدخل بريدك الإلكتروني">
+            </div>
+            <div class="mb-3">
+                <label for="newPassword" class="form-label">كلمة المرور</label>
+                <div class="input-group">
+                    <input type="password" class="form-control" id="newPassword" name="newPassword" required placeholder="أدخل كلمة المرور" minlength="8">
+                    <button type="button" class="btn btn-outline-secondary" id="togglePassword">
+                        <i class="fas fa-eye"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="mb-3">
+                <label for="confirmPassword" class="form-label">تأكيد كلمة المرور</label>
+                <div class="input-group">
+                    <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" required placeholder="أعد إدخال كلمة المرور" minlength="8">
+                    <button type="button" class="btn btn-outline-secondary" id="toggleConfirmPassword">
+                        <i class="fas fa-eye"></i>
+                    </button>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary">إنشاء الحساب</button>
+        </form>
+
+        <p class="form-text">هل لديك حساب؟ <a href="login.html">تسجيل الدخول</a></p>
+    </div>
+
+    <script>
+        const togglePasswordButton = document.getElementById("togglePassword");
+        const toggleConfirmPasswordButton = document.getElementById("toggleConfirmPassword");
+        const passwordField = document.getElementById("newPassword");
+        const confirmPasswordField = document.getElementById("confirmPassword");
+
+        togglePasswordButton.addEventListener("click", () => {
+            const type = passwordField.type === "password" ? "text" : "password";
+            passwordField.type = type;
+            togglePasswordButton.innerHTML = type === "password" ? '<i class="fas fa-eye"></i>' : '<i class="fas fa-eye-slash"></i>';
+        });
+
+        toggleConfirmPasswordButton.addEventListener("click", () => {
+            const type = confirmPasswordField.type === "password" ? "text" : "password";
+            confirmPasswordField.type = type;
+            toggleConfirmPasswordButton.innerHTML = type === "password" ? '<i class="fas fa-eye"></i>' : '<i class="fas fa-eye-slash"></i>';
+        });
+    </script>
+
+</body>
+</html>
